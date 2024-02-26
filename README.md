@@ -1,3 +1,21 @@
+---
+title: "GAIA Hackathon"
+emoji: "🌱"
+colorFrom: "green"
+colorTo: "blue"
+sdk: "gradio"
+python_version: "3.8"
+sdk_version: "2.8.1"
+suggested_hardware: "cpu-upgrade"
+app_file: "app.py"
+tags:
+  - "agriculture"
+  - "ai"
+  - "hackathon"
+pinned: false
+hf_oauth: false
+---
+
 # GAIA Hackathon
 
 Welcome to the GAIA Hackathon! This hackathon is a collaborative effort between Comexposium, La Ferme Digitale, and Mistral AI, aimed at developing innovative solutions to address key challenges in the agriculture sector.
