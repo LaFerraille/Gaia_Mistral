@@ -147,20 +147,55 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
     map_html = f'<iframe src="/static/map.html" width="100%" height="500px"></iframe>'
 
     return f"""
-    <h1>Welcome to the home page</h1>
-    <h2>User Profile</h2>
-    <p>Name: {user_profile.name}</p>
-    <p>Age: {user_profile.age}</p>
-    <p>Location: {user_profile.location}</p>
-    <p>Latitude: {user_profile.lat}</p>
-    <p>Longitude: {user_profile.lon}</p>
-    <h2>Chat Bot</h2>
-    <label for="question">Question:</label>
-    <input type="text" id="question" name="question" required>
-    <input type="submit" value="Submit">
-    <p>Anwer: {chat_request.answer}</p>
+    <html>
+    <head>
+        <title>Home Page</title>
+        <script>
+            async function submitQuestion() {{
+                const question = document.getElementById("question").value;
+                const responseContainer = document.getElementById("response");
 
+                // Send a POST request to the /chat endpoint
+                const response = await fetch("/chat", {{
+                    method: "POST",
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{ "message": question }})
+                }});
 
-    <h2>Map</h2>
-    {map_html}
+                if (response.ok) {{
+                    const jsonResponse = await response.json();
+                    responseContainer.innerHTML = "Answer: " + jsonResponse.response;
+                }} else {{
+                    responseContainer.innerHTML = "Failed to get response";
+                }}
+                // Prevent form from submitting traditionally
+                return false;
+            }}
+        </script>
+    </head>
+    <body>
+        <h1>Welcome to the home page</h1>
+        <!-- User Profile Section -->
+        <h2>User Profile</h2>
+        <p>Name: {user_profile.name}</p>
+        <p>Age: {user_profile.age}</p>
+        <p>Location: {user_profile.location}</p>
+        <p>Latitude: {user_profile.lat}</p>
+        <p>Longitude: {user_profile.lon}</p>
+
+        <!-- Chat Bot Section -->
+        <h2>Chat Bot</h2>
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question" required>
+        <button onclick="submitQuestion()">Submit</button>
+        <p id="response">Answer: </p>
+
+        <!-- Map Section -->
+        <h2>Map</h2>
+        {map_html}
+    </body>
+    </html>
     """
+
