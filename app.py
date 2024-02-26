@@ -2,7 +2,6 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
-
 import gradio as gr
 import plotly.graph_objects as go
 import uvicorn
@@ -103,20 +102,6 @@ def create_world_map(lat, lon):
 
     return fig
 
-
-# # Fake JSON data for the user profile
-# user_profile_data = {
-#     "name": "John Doe",
-#     "age": 30,
-#     "location": "Montreal",
-#     "lat": 45.5017,
-#     "lon": -73.5673
-# }
-
-# #as a JSON:
-# with open('user_profile.json', 'w') as f:
-#     json.dump(user_profile_data, f)
-
 # Mistral AI Chat
 
 def chat_with_mistral(user_input):
@@ -125,37 +110,6 @@ def chat_with_mistral(user_input):
     chat_response = client.chat(model=model, messages=messages)
     return chat_response.choices[0].message.content
 
-
-### FRONTEND ###
-def create_gradio_dashboard():
-    with gr.Blocks() as demo:
-        # Mistral AI Chat
-        with gr.Column():
-            with gr.Row():
-                user_input = gr.Textbox (lines=2, placeholder=placeholder)
-                send_chat_btn = gr.Button(value="Send")
-                update_map_btn = gr.Button(value="Update Map")
-            chat_output = gr.Textbox(lines=2, placeholder="Réponse")
-
-        # Profile
-        with gr.Row():
-            name = gr.Textbox(label="Name")
-            age = gr.Number(label="Age")
-            location = gr.Textbox(label="Location")
-            lat = gr.Number(value=45.5017, label="Latitude")
-            lon = gr.Number(value=-73.5673, label="Longitude")
-            load_user_profile_btn = gr.Button(value="Load User Profile")
-            save_user_profile_btn = gr.Button(value="Save User Profile")
-
-        # Map
-        with gr.Row():
-            map = gr.Plot()
-
-        # Mistral AI Chat
-        demo.load(chat_with_mistral, user_input, chat_output)
-        send_chat_btn.click(chat_with_mistral, user_input, chat_output)
-
-    return demo
 
 
 # Profile stuff
@@ -210,15 +164,6 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
     # display the map
     map_html = f'<iframe src="/static/map.html" width="100%" height="500px"></iframe>'
 
-    #2nd : gradio dashboard on top of the map to toggle the user profile and display chat with Mistral AI
-    # create the gradio dashboard
-    # gradio_dashboard = create_gradio_dashboard()
-    # save the dashboard as a file
-    # dashboard_file = static_dir / "dashboard.html"
-    # gradio_dashboard.save(dashboard_file)
-    # # display the dashboard
-    # dashboard_html = f'<iframe src="/static/dashboard.html" width="100%" height="500px"></iframe>'
-
     return f"""
     <h1>Welcome to the home page</h1>
     <h2>User Profile</h2>
@@ -230,5 +175,3 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
     <h2>Map</h2>
     {map_html}
     """
-    # <h2>Gradio Dashboard</h2>
-    # {dashboard_html}
