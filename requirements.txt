@@ -3,3 +3,4 @@ mistralai
 langchain-community
 faiss-cpu
 gradio
+plotly
