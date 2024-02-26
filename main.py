@@ -233,6 +233,6 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
     # <h2>Gradio Dashboard</h2>
     # {dashboard_html}
 
-# serve the app
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+# # serve the app for local use with uvicorn 
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=7860)

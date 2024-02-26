@@ -4,8 +4,6 @@ emoji: "🌱"
 colorFrom: "green"
 colorTo: "blue"
 sdk: "docker"
-suggested_hardware: "cpu-upgrade"
-app_file: "app.py"
 tags:
   - "agriculture"
   - "ai"
