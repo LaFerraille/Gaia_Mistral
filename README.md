@@ -13,9 +13,13 @@ hf_oauth: false
 ---
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
-#TO-DO - Brainstorming
+# To run locally:
+uvicorn app:app --host 0.0.0.0 --port 80
+and go to http://localhost:80
 
-** Système de carte interactive collaborative, AI-powered par Mistral **
+# TO-DO - Brainstorming
+
+**Système de carte interactive collaborative, AI-powered par Mistral**
 
 *Features:*
 - [ ] une sorte de réseau social 
