@@ -13,6 +13,8 @@ from pydantic import BaseModel
 from fastapi import Depends
 import json
 from fastapi.responses import HTMLResponse
+from fastapi import HTTPException
+
 
 
 # Load environment variables
@@ -105,6 +107,23 @@ def update_user_profile(user_profile: UserProfile):
 user_profile = load_user_profile()
 
 
+
+# chat with Mistral AI
+class ChatRequest(BaseModel):
+    message: str
+    answer: str
+
+chat_request = ChatRequest(message="Bonjour Mistral, comment faire pour produire du maïs ?", answer=chat_with_mistral("Bonjour Mistral, comment faire pour produire du maïs ?"))
+
+@app.post("/chat")
+async def chat(chat_request: ChatRequest):
+    try:
+        response = chat_with_mistral(chat_request.message)
+        return {"response": response}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 ### BACKEND ###
 @app.get("/meteo")
 async def read_meteo(location: str, date: str):
@@ -135,6 +154,13 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
     <p>Location: {user_profile.location}</p>
     <p>Latitude: {user_profile.lat}</p>
     <p>Longitude: {user_profile.lon}</p>
+    <h2>Chat Bot</h2>
+    <label for="question">Question:</label>
+    <input type="text" id="question" name="question" required>
+    <input type="submit" value="Submit">
+    <p>Anwer: {chat_request.answer}</p>
+
+
     <h2>Map</h2>
     {map_html}
     """
