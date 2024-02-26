@@ -24,16 +24,11 @@ def chat_with_mistral(user_input):
 
 app = gr.Interface(
     fn=chat_with_mistral,
-    chatbot=gr.Chatbot(height=300),
-    textbox=gr.Textbox(placeholder=placeholder, container=False, scale=7),
+    inputs=gr.inputs.Textbox(lines=2, placeholder=placeholder),
+    outputs="text",
     title=title,
     description=description,
-    theme="soft",
-    examples=examples,
-    cache_examples=True,
-    retry_btn=None,
-    undo_btn="Annuler",
-    clear_btn="Effacer",
+    examples=examples
 )
 
 if __name__ == "__main__":
