@@ -1,36 +1,40 @@
-# import gradio as gr
-# from mistralai.client import MistralClient, ChatMessage
-# import os
-# from dotenv import load_dotenv
+import gradio as gr
+from mistralai.client import MistralClient, ChatMessage
+import os
+from dotenv import load_dotenv
 
-# # Load environment variables
-# load_dotenv()
-# api_key = os.getenv('API_KEY')
+# Load environment variables
+load_dotenv()
+api_key = os.getenv('API_KEY')
+client = MistralClient(api_key=api_key)
+model = 'mistral-small'
 
-# # Initialize Mistral client with the API key
-# client = MistralClient(api_key=api_key)
 
-# def answer_question(question):
-#     """Directly ask Mistral the question and return the answer."""
-#     # Format the user's question for Mistral
-#     user_message = question
+title = "Gaia Mistral Chat Demo"
+description = "Example of simple chatbot with Gradio and Mistral AI via its API"
+placeholder = "Posez moi une question sur l'agriculture"
+examples = ["Comment fait on pour produire du maïs ?", "Rédige moi une lettre pour faire un stage dans une exploitation agricole", "Comment reprendre une exploitation agricole ?"]
 
-#     # Use the run_mistral function to get an answer
-#     answer = run_mistral(user_message)
-    
-#     return answer
 
-# def run_mistral(user_message, model="mistral-medium"):
-#     """Interact with Mistral using chat."""
-#     messages = [ChatMessage(role="user", content=user_message)]
-#     chat_response = client.chat(model=model, messages=messages)
-#     return chat_response.choices[0].message.content
+def chat_with_mistral(user_input):
+    messages = [ChatMessage(role="user", content=user_input)]
 
-# app = gr.Interface(fn=answer_question,
-#                    inputs=gr.inputs.Textbox(lines=2, placeholder="Ask a question..."),
-#                    outputs="text",
-#                    title="Your Assistant",
-#                    description="Ask any question, and I'll try to provide an informative answer.")
+    chat_response = client.chat(model=model, messages=messages)
+    return chat_response.choices[0].message.content
 
-# if __name__ == "__main__":
-#     app.launch(share=True)  # Set `share=True` to create a public link
+app = gr.ChatInterface(
+    fn=chat_with_mistral,
+    chatbot=gr.Chatbot(height=300),
+    textbox=gr.Textbox(placeholder=placeholder, container=False, scale=7),
+    title=title,
+    description=description,
+    theme="soft",
+    examples=examples,
+    cache_examples=True,
+    retry_btn=None,
+    undo_btn="Annuler",
+    clear_btn="Effacer",
+)
+
+if __name__ == "__main__":
+    app.launch(share=True)  # Set `share=True` to create a public link
