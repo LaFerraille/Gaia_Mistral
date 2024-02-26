@@ -15,6 +15,7 @@ tags:
 pinned: false
 hf_oauth: false
 ---
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 # GAIA Hackathon
 
