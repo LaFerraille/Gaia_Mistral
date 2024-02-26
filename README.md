@@ -5,7 +5,7 @@ colorFrom: "green"
 colorTo: "blue"
 sdk: "gradio"
 python_version: "3.8"
-sdk_version: "2.8.1"
+sdk_version: "3.4"
 suggested_hardware: "cpu-upgrade"
 app_file: "app.py"
 tags:
