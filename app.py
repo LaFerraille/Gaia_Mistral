@@ -109,14 +109,17 @@ user_profile = load_user_profile()
 
 
 # chat with Mistral AI
+from typing import Optional
+
 class ChatRequest(BaseModel):
     message: str
-    answer: str
+    answer: Optional[str] = None
 
-chat_request = ChatRequest(message="Bonjour Mistral, comment faire pour produire du maïs ?", answer=chat_with_mistral("Bonjour Mistral, comment faire pour produire du maïs ?"))
 
 @app.post("/chat")
 async def chat(chat_request: ChatRequest):
+    print(f'chat_request: {chat_request}')
+    print(f'chat_request.message: {chat_request.message}')
     try:
         response = chat_with_mistral(chat_request.message)
         return {"response": response}
@@ -153,7 +156,9 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
         <script>
             async function submitQuestion() {{
                 const question = document.getElementById("question").value;
+                console.log("Question: " + question);   
                 const responseContainer = document.getElementById("response");
+                console.log("responseContainer: " + responseContainer); 
 
                 // Send a POST request to the /chat endpoint
                 const response = await fetch("/chat", {{
@@ -164,8 +169,11 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
                     body: JSON.stringify({{ "message": question }})
                 }});
 
+                console.log("response api: " + response);   
+
                 if (response.ok) {{
                     const jsonResponse = await response.json();
+                    console.log("jsonResponse: " + jsonResponse);   
                     responseContainer.innerHTML = "Answer: " + jsonResponse.response;
                 }} else {{
                     responseContainer.innerHTML = "Failed to get response";
@@ -185,8 +193,8 @@ async def home(user_profile: UserProfile = Depends(load_user_profile)):
         <p>Latitude: {user_profile.lat}</p>
         <p>Longitude: {user_profile.lon}</p>
 
-        <!-- Chat Bot Section -->
-        <h2>Chat Bot</h2>
+        <!-- ChatBot Section -->
+        <h2>ChatBot</h2>
         <label for="question">Question:</label>
         <input type="text" id="question" name="question" required>
         <button onclick="submitQuestion()">Submit</button>
