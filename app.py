@@ -22,7 +22,7 @@ def chat_with_mistral(user_input):
     chat_response = client.chat(model=model, messages=messages)
     return chat_response.choices[0].message.content
 
-app = gr.ChatInterface(
+app = gr.Interface(
     fn=chat_with_mistral,
     chatbot=gr.Chatbot(height=300),
     textbox=gr.Textbox(placeholder=placeholder, container=False, scale=7),
