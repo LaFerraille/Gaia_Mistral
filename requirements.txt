@@ -1,2 +1,5 @@
 python-dotenv
 mistralai
+langchain-community
+faiss-cpu
+gradio
