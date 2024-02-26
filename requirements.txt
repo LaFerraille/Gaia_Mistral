@@ -4,3 +4,22 @@ langchain-community
 faiss-cpu
 gradio
 plotly
+scipy == 1.11.2
+numpy == 1.25.2
+python-dotenv == 1.0.0
+pandas == 2.1.0
+requests == 2.31.0
+chromadb == 0.4.22
+langchain == 0.1.6
+tiktoken == 0.6.0
+pypdf == 4.0.1
+openai == 1.12.0
+transformers == 4.37.2
+torch == 2.2.0
+langchain-community == 0.0.19
+sentence_transformers == 2.3.1
+jq == 1.6.0
+moviepy==1.0.3
+mistralai == 0.0.12
+csvkit == 1.4.0
+uvicorn
