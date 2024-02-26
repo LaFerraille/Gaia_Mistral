@@ -26,11 +26,17 @@ def run_mistral(user_message, model="mistral-medium"):
     chat_response = client.chat(model=model, messages=messages)
     return chat_response.choices[0].message.content
 
-app = gr.Interface(fn=answer_question,
-                   inputs=gr.inputs.Textbox(lines=2, placeholder="Ask a question..."),
-                   outputs="text",
-                   title="Your Assistant",
-                   description="Ask any question, and I'll try to provide an informative answer.")
+app = gr.Interface(
+    fn=chat_with_mistral,
+    inputs=gr.Textbox(lines=2, placeholder=placeholder),
+    outputs="text",
+    title=title,
+    description=description,
+    examples=examples
+)
+
+# Create a map using the library folium
+
 
 if __name__ == "__main__":
     app.launch(share=True)  # Set `share=True` to create a public link
