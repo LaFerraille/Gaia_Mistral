@@ -1,0 +1,12 @@
+.env
+hackaton_venv/*
+hackaton_venv/
+
+llm_data_augmentation/RAG/medicines_management/data/csv
+llm_data_augmentation/RAG/medicines_management/data/xls
+llm_data_augmentation/RAG/medicines_management/data/old
+llm_data_augmentation/RAG/medicines_management/data/json/*
+llm_data_augmentation/RAG/medicines_management/data/chroma_db
+
+data/*
+llm_data_augmentation/RAG/medicines_management/chroma_db_nccn
