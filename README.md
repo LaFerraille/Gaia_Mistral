@@ -67,21 +67,13 @@ To run this application, you'll need:
 
 2. **Install Dependencies**
 
-<<<<<<< HEAD
-  ``bash
-=======
   ```bash
->>>>>>> 89e5dd9 (update readme)
   pip install -r requirements.txt
   ```
 
 3. **Set Up Your API Key**
 
-<<<<<<< HEAD
-  ``bash
-=======
   ```bash
->>>>>>> 89e5dd9 (update readme)
   API_KEY=your_mistral_ai_api_key_here
   ```
 
