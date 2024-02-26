@@ -1,8 +1,64 @@
-import gradio as gr
-from mistralai.client import MistralClient, ChatMessage
 import os
-from dotenv import load_dotenv
+import sys
+from datetime import datetime
+from pathlib import Path
+
+import gradio as gr
 import plotly.graph_objects as go
+import uvicorn
+from dotenv import load_dotenv
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from mistralai.client import ChatMessage, MistralClient
+
+# create a FastAPI app
+app = FastAPI()
+
+# create a static directory to store the static files
+static_dir = Path('./static')
+static_dir.mkdir(parents=True, exist_ok=True)
+
+# mount FastAPI StaticFiles server
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+# Gradio stuff
+
+
+# def predict(text_input):
+#     file_name = f"{datetime.utcnow().strftime('%s')}.html"
+#     file_path = static_dir / file_name
+#     print(file_path)
+#     with open(file_path, "w") as f:
+#         f.write(f"""
+#         <script src="https://cdn.tailwindcss.com"></script>
+#         <body class="bg-gray-200 dark:text-white dark:bg-gray-900">
+#         <h1 class="text-3xl font-bold">
+#         Hello <i>{text_input}</i> From Gradio Iframe
+#         </h1>
+#         <h3>Filename: {file_name}</h3>
+#         """)
+#     iframe = f"""<iframe src="/static/{file_name}" width="100%" height="500px"></iframe>"""
+#     link = f'<a href="/static/{file_name}" target="_blank">{file_name}</a>'
+#     return link, iframe
+
+
+# with gr.Blocks() as block:
+#     gr.Markdown("""
+# ## Gradio + FastAPI + Static Server
+# This is a demo of how to use Gradio with FastAPI and a static server.
+# The Gradio app generates dynamic HTML files and stores them in a static directory. FastAPI serves the static files.
+# """)
+#     with gr.Row():
+#         with gr.Column():
+#             text_input = gr.Textbox(label="Name")
+#             markdown = gr.Markdown(label="Output Box")
+#             new_btn = gr.Button("New")
+#         with gr.Column():
+#             html = gr.HTML(label="HTML preview", show_label=True)
+
+#     new_btn.click(fn=predict, inputs=[text_input], outputs=[markdown, html])
+
+
 
 # Load environment variables
 load_dotenv()
@@ -72,5 +128,10 @@ with gr.Blocks() as demo:
     update_map_btn.click(create_world_map, [lat, lon], map)
 
 
+
+# mount Gradio app to FastAPI app
+app = gr.mount_gradio_app(app, demo, path="/")
+
+# serve the app
 if __name__ == "__main__":
-    demo.launch(share=True)  # Set `share=True` to create a public link
+    uvicorn.run(app, host="0.0.0.0", port=7860)
