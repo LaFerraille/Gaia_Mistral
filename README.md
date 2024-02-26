@@ -17,6 +17,8 @@ hf_oauth: false
 ---
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
+Checkout the space HuggingFace to visualize the solution at https://huggingface.co/spaces/Ferrxni/Gaia_Mistral
+
 #TO-DO - Brainstorming
 
 ** Système de carte interactive collaborative, AI-powered par Mistral **
@@ -33,31 +35,53 @@ Check out the configuration reference at https://huggingface.co/docs/hub/spaces-
   - vidéos postées par des agriculteurs de ta région
   - personnalisation du fond de carte IGN (cf. api IGN) ; geopandas pour Python je crois
   - data.gouv.fr https://www.data.gouv.fr/fr/reuses/la-carte-interactive-des-types-delevages-et-des-regions-agricoles-en-france/
+  
+# Gaia Mistral Chat Demo
 
-# GAIA Hackathon
+## Introduction
 
-Welcome to the GAIA Hackathon! This hackathon is a collaborative effort between Comexposium, La Ferme Digitale, and Mistral AI, aimed at developing innovative solutions to address key challenges in the agriculture sector.
+This project showcases a simple chatbot application built with Gradio and the Mistral AI API. The chatbot is designed to answer questions related to agriculture. Users can ask questions in French, and the chatbot, powered by the Mistral AI's `mistral` model, will provide responses.
 
-## Hackathon Description
+## Features
 
-Participants in this hackathon will be tasked with designing tools capable of answering questions posed through one-minute videos. To accomplish this, teams will have access to a kit containing 50 solutions and 150 datasets provided by the hackathon organizers, starting from January 29, 2024. This approach will enable the rapid development of concrete and operational proof-of-concepts (POCs).
+- Simple chat interface for querying agricultural topics. (MVP 1)
+- Interactive map with chatbot experience (MVP 2)
 
-As part of this hackathon, Comexposium and La Ferme Digitale have partnered with Mistral AI to provide participants with privileged access to the first multimodal agricultural AI model. This model combines natural language, voice, images, and data to create a comprehensive and innovative solution. The POCs developed during the hackathon will contribute to the utilization and enhancement of this model, opening up new possibilities for the application of AI in the agricultural domain. Two demonstrations have been set up, which participants can access (level 1 and level 2).
+## Requirements
 
-For getting started, we highly recommend using [Hugging Face](https://huggingface.co/).
+To run this application, you'll need:
 
-If you have any technical questions, please visit the Mistral support site on [Discord](https://discord.gg/pCePuRhG).
+- Python 3.6 or later.
+- An API key from Mistral AI.
 
-If you wish to conduct local tests and do not have a MISTRAL API key, please contact us directly via email.
+## Setup
 
-The elements will continue to evolve for 15 days, but all the main concepts are already present. Participants in the GAIA hackathon will be confronted with crucial questions, including farm succession, the attractiveness of agricultural professions and training, crop management, livestock management, purchasing and selling, as well as deciphering standards and regulations.
+1. **Clone the Repository**
 
-The goal is to find innovative, practical, and pragmatic solutions that can be implemented immediately to address these essential challenges for the future of agriculture.
+   Start by cloning this repository to your local machine:
 
-## Contact Information
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
 
-For inquiries or assistance, please reach out to us:
+2. **Install Dependencies**
 
-Email: [contact@example.com](mailto:contact@example.com)
+  ``bash
+  pip install -r requirements.txt
+  ```
 
-Website: [www.gaiacorp.com](https://www.gaiacorp.com)
+3. **Set Up Your API Key**
+
+  ``bash
+  API_KEY=your_mistral_ai_api_key_here
+  ```
+
+## Running the Application
+
+To launch the chatbot, run the following command in the terminal from the project's root directory:
+
+  ```bash
+  python3 app.py
+  ```
+

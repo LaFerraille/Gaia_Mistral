@@ -24,7 +24,7 @@ def chat_with_mistral(user_input):
 
 app = gr.Interface(
     fn=chat_with_mistral,
-    inputs=gr.inputs.Textbox(lines=2, placeholder=placeholder),
+    inputs=gr.Textbox(lines=2, placeholder=placeholder),
     outputs="text",
     title=title,
     description=description,
