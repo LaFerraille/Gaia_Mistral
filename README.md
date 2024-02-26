@@ -17,6 +17,23 @@ hf_oauth: false
 ---
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
+#TO-DO - Brainstorming
+
+** Système de carte interactive collaborative, AI-powered par Mistral **
+
+*Features:*
+- [ ] une sorte de réseau social 
+- [ ] Reporting des datas avec Mistral AI + génération d'un dashboard ad hoc
+- [ ] Profil utilisateur et centres d'intérêt pour mieux permettre au RAG de cibler ses comptes-rendus
+- [ ] newsletter journalière / hebdomadaire
+- [ ] filtrage utilisateur dans un rayon de 10, 50, 100km
+- [ ] carte interactive avec display d'API qu'on a trouvées sur internet : Par exemple (mes idées, Clément)
+  - windy pour aérologie,
+  - webcams des champs
+  - vidéos postées par des agriculteurs de ta région
+  - personnalisation du fond de carte IGN (cf. api IGN) ; geopandas pour Python je crois
+  - data.gouv.fr https://www.data.gouv.fr/fr/reuses/la-carte-interactive-des-types-delevages-et-des-regions-agricoles-en-france/
+
 # GAIA Hackathon
 
 Welcome to the GAIA Hackathon! This hackathon is a collaborative effort between Comexposium, La Ferme Digitale, and Mistral AI, aimed at developing innovative solutions to address key challenges in the agriculture sector.
