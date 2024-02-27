@@ -6,6 +6,7 @@ from pathlib import Path
 import plotly.graph_objects as go
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -35,6 +36,14 @@ examples = ["Comment fait on pour produire du maïs ?",
 # create a FastAPI app
 app = FastAPI()
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 # create a static directory to store the static files
 static_dir = Path('./static')
 static_dir.mkdir(parents=True, exist_ok=True)
