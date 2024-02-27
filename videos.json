@@ -2,21 +2,29 @@
     "1": {
         "name": "Cédric",
         "url": "https://youtu.be/yd9agyhuDp4?list=PLtQ79dzgXtJ_HGJFUb204XbdFGv4LZhRg",
-        "location": "Saint-Étienne"
+        "location": "Saint-Étienne",
+        "lat": 45.4333,
+        "lon": 4.4
     },
     "2": {
         "name": "Théo Paul",
         "url": "https://youtu.be/q9yA2UiADXk?si=Q3fHYOnJsqhtbiiw",
-        "location": "Nancy"
+        "location": "Nancy",
+        "lat": 48.6921,
+        "lon": 6.1844
     },
     "3": {
         "name": "Nadège",
         "url": "https://youtu.be/oPcG6hpKNDc?si=yBeJlFqfMbM2f20M",
-        "location": "Paris"
+        "location": "Paris",
+        "lat": 48.8566,
+        "lon": 2.3522
     },
     "4": {
         "name": "Henri",
         "url": "https://youtu.be/4pgQfTgYUeo?si=XiFJgLmrMLfm1-wj",
-        "location": "Lyon"
+        "location": "Lyon",
+        "lat": 45.75,
+        "lon": 4.85
     }
 }

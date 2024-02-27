@@ -79,10 +79,35 @@ with open('data/departements.geojson', 'r') as f:
 with open('data/regions.geojson', 'r') as f:
     regions = json.load(f)
 
+with open('videos.json', 'r') as f:
+    videos = json.load(f)
+
+
 
 def create_world_map(lat, lon, dpmts=False, rgns= False):
 
     fig = go.Figure()
+
+    for video_id, video_info in videos.items():
+        name = video_info['name']
+        url = video_info['url']
+        location = video_info['location']
+        video_lat = video_info['lat']
+        video_lon = video_info['lon']
+
+        fig.add_trace(go.Scattermapbox(
+            mode='markers',
+            lon=[video_lon],
+            lat=[video_lat],
+            marker=go.scattermapbox.Marker(
+                size=14,
+                color='blue'
+            ),
+            text=name,
+            hoverinfo='text',
+            showlegend=False,
+            visible=True,
+        ))
 
     if dpmts :
         for feature_departement in departements['features']:
