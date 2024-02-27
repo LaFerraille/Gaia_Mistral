@@ -8,23 +8,17 @@
       <ul class="menus">
         <li class="main">
           <a href="#">
-            <i class="fas fa-bars"></i>
+            <img src="/static/mistral.png" alt="Mistral" class="mistral" />          
           </a>
         </li>
         <li class="menu">
-          <a href="#">
-            <i class="fas fa-home"></i>
-          </a>
+          <a href="#"><i class="fas fa-home"></i></a>
         </li>
         <li class="menu">
-          <a href="#">
-            <i class="fas fa-sliders-h"></i>
-          </a>
+          <a href="#"><i class="fas fa-sliders-h"></i></a>
         </li>
         <li class="menu">
-          <a href="#">
-            <i class="fas fa-cog"></i>
-          </a>
+          <a href="#"><i class="fas fa-cog"></i></a>
         </li>
       </ul>
     </nav>
@@ -35,25 +29,25 @@
         <li class="main"><span>Menus</span></li>
         <li class="submenu">
           <a href="#">Chat</a>
-          <!-- add mistral.png -->
-          <img src="/static/mistral.png" alt="Mistral" class="mistral" />
           <div id="chat">
+            <ul id="chat_messages"></ul>
             <input
               type="text"
               id="user_input"
-              placeholder="Enter your message"
+              placeholder="Posez une question au modèle Mistral AI"
             />
             <button onclick="sendChat()">Send</button>
-            <ul id="chat_messages"></ul>
           </div>
         </li>
         <li class="submenu">
           <a href="#">Profile</a>
-          <ul id="Profile">
-            <li>Name: {{ user_profile.name }}</li>
-            <li>Age: {{ user_profile.age }}</li>
-            <li>Location: {{ user_profile.location }}</li>
-          </ul>
+          <div id="profile">
+            <ul>
+              <li>Name: {{ user_profile.name }}</li>
+              <li>Age: {{ user_profile.age }}</li>
+              <li>Location: {{ user_profile.location }}</li>
+            </ul>
+          </div>
         </li>
       </ul>
     </div>

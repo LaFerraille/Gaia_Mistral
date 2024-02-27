@@ -183,3 +183,8 @@ header {
   height: 100%;
   z-index: -1;
 }
+
+.mistral {
+  width: 50px;
+  height: 42px;
+}
