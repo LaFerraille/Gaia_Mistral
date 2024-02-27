@@ -42,12 +42,7 @@ static_dir.mkdir(parents=True, exist_ok=True)
 # mount FastAPI StaticFiles server
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-
-# Gradio stuff
-
-
-
-
+# create a function to create a world map
 
 def create_world_map(lat, lon):
 
@@ -158,8 +153,6 @@ weather=load_weather()
 async def read_meteo(location: str, date: str):
     # API call to get the weather
     pass
-
-
 
 
 
