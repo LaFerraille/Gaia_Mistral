@@ -41,7 +41,7 @@ if production:
 
 # Load environment variables
 load_dotenv()
-api_key = os.getenv('API_KEY')
+api_key = os.environ('MISTRAL_API_KEY')
 client = MistralClient(api_key=api_key)
 model = 'mistral-small'
 

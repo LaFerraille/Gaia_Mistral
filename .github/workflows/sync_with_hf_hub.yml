@@ -17,4 +17,7 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          AGRO_API_KEY: ${{ secrets.AGRO_API_KEY }}
+          OPENCAGE_API_KEY: ${{ secrets.OPENCAGE_API_KEY }}
         run: git push https://Ferrxni:$HF_TOKEN@huggingface.co/spaces/Ferrxni/Gaia_Mistral main
