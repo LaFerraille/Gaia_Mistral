@@ -24,7 +24,7 @@ today = today.strftime("%Y-%m-%d")
 def create_env_file():
     import os
 
-    secrets = ['API_KEY', 'AGRO_API_KEY', 'OPENCAGE_API_KEY']
+    secrets = ['MISTRAL_API_KEY', 'AGRO_API_KEY', 'OPENCAGE_API_KEY']
     for secret in secrets:
         secret_value = os.environ[secret]
         if secret_value is None:
@@ -34,7 +34,7 @@ def create_env_file():
                 f.write(f"{secret}={secret_value}\n")
 
 # Hugging face space secret retrieval:
-production = True
+production = False
 if production:
     create_env_file()
 
