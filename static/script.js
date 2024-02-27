@@ -43,7 +43,7 @@ function sendChat() {
     user_message.className = "chat-message"; // add a class to style the li elements
 
     var user_image = document.createElement("img");
-    user_image.src = "static/agriculteur.png"; // replace with the actual path to the image
+    user_image.src = "https://cdn.icon-icons.com/icons2/1465/PNG/512/138manfarmer2_100718.png"; // replace with the actual path to the image
     user_image.id = "user-image"; // add an id to style the image
     user_message.appendChild(user_image);
 
