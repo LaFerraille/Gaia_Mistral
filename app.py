@@ -34,7 +34,7 @@ def create_env_file():
                 f.write(f"{secret}={secret_value}\n")
 
 # Hugging face space secret retrieval:
-production = False
+production = True
 if production:
     create_env_file()
 
