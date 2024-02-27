@@ -1,4 +1,3 @@
-![Arrière-plan](back.png)
 ---
 title: "Dashboard Mistral - GAIA"
 emoji: "🌱"
@@ -12,6 +11,11 @@ tags:
 pinned: false
 hf_oauth: false
 ---
+
+![Arrière-plan](back.png)
+
+Check out the final [dashboard](https://huggingface.co/spaces/Ferrxni/AgriHackteurs) on your browser and play with it.
+
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 # Dashboard Mistral - GAIA
