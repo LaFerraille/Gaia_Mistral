@@ -80,49 +80,53 @@ with open('data/regions.geojson', 'r') as f:
     regions = json.load(f)
 
 
-def create_world_map(lat, lon):
+def create_world_map(lat, lon, dpmts=False, rgns= False):
 
     fig = go.Figure()
 
-    for feature_departement in departements['features']:
-        if feature_departement['geometry']['type'] == 'Polygon':
-            coords = feature_departement['geometry']['coordinates'][0]
-            lons, lats = zip(*coords)
-            lons = list(lons)
-            lats = list(lats)
-            fig.add_trace(go.Scattermapbox(
-                mode='lines',
-                lon=lons + [lons[0]],
-                lat=lats + [lats[0]],
-                marker=go.scattermapbox.Marker(
-                    size=14
-                ),
-                text=feature_departement['properties']['nom'],
-                hoverinfo='text',
-                line=dict(
-                    color='blue',
-                    width=1
-                ),
-                showlegend=False
-            ))
+    if dpmts :
+        for feature_departement in departements['features']:
+            if feature_departement['geometry']['type'] == 'Polygon':
+                coords = feature_departement['geometry']['coordinates'][0]
+                lons, lats = zip(*coords)
+                lons = list(lons)
+                lats = list(lats)
+                fig.add_trace(go.Scattermapbox(
+                    mode='lines',
+                    lon=lons + [lons[0]],
+                    lat=lats + [lats[0]],
+                    marker=go.scattermapbox.Marker(
+                        size=14
+                    ),
+                    text=feature_departement['properties']['nom'],
+                    hoverinfo='text',
+                    line=dict(
+                        color='blue',
+                        width=1
+                    ),
+                    showlegend=False,
+                    visible=True,
+                ))
 
-    for feature_region in regions['features']:
-        if feature_region['geometry']['type'] == 'Polygon':
-            coords = feature_region['geometry']['coordinates'][0]
-            lons, lats = zip(*coords)
-            lons = list(lons)
-            lats = list(lats)
-            fig.add_trace(go.Scattermapbox(
-                mode='lines',
-                lon=lons + [lons[0]],
-                lat=lats + [lats[0]],
-                hoverinfo='text',
-                line=dict(
-                    color='red',  # Set the line color to red
-                    width=1,  # Set the width of the line
-                ),
-                showlegend=False
-            ))
+    if rgns:
+        for feature_region in regions['features']:
+            if feature_region['geometry']['type'] == 'Polygon':
+                coords = feature_region['geometry']['coordinates'][0]
+                lons, lats = zip(*coords)
+                lons = list(lons)
+                lats = list(lats)
+                fig.add_trace(go.Scattermapbox(
+                    mode='lines',
+                    lon=lons + [lons[0]],
+                    lat=lats + [lats[0]],
+                    hoverinfo='text',
+                    line=dict(
+                        color='red',  # Set the line color to red
+                        width=1,  # Set the width of the line
+                    ),
+                    showlegend=False,
+                    visible=True,
+                ))
 
     fig.add_trace(go.Scattermapbox(
         lat=[lat],
@@ -300,7 +304,7 @@ async def home(
     weather = weather.weather
 
     # create the map
-    fig = create_world_map(lat, lon)
+    fig = create_world_map(lat, lon, dpmts=True, rgns=True)
     # save the map as a file
     map_file = static_dir / "map.html"
     fig.write_html(str(map_file), config={'displayModeBar': False})
