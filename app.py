@@ -34,14 +34,14 @@ def create_env_file():
                 f.write(f"{secret}={secret_value}\n")
 
 # Hugging face space secret retrieval:
-production = True
+production = False
 if production:
     create_env_file()
 
 
 # Load environment variables
 load_dotenv()
-api_key = os.environ('MISTRAL_API_KEY')
+api_key = os.getenv('MISTRAL_API_KEY')
 client = MistralClient(api_key=api_key)
 model = 'mistral-small'
 
@@ -99,6 +99,8 @@ def create_world_map(lat, lon):
     )
 
     return fig
+
+
 
 
 def chat_with_mistral(user_input):
@@ -254,7 +256,6 @@ async def home(
     map_html = f'<iframe src="/static/map.html" width="100%" height="100%" ></iframe>'
 
     return templates.TemplateResponse("layout.html", {"request": request, "user_profile": user_profile, "weather": weather, "map_html": map_html})
-
 
 class ChatInput(BaseModel):
     user_input: str
