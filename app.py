@@ -35,7 +35,7 @@ def create_env_file():
 
 
 # Hugging face space secret retrieval:
-production = False
+production = True
 if production:
     create_env_file()
 
