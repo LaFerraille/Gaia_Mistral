@@ -1,9 +1,28 @@
 if (document.querySelector(".main")) {
     document.querySelector(".main").onclick = function (){
-        var submenu = document.querySelector(".spacer");
+        var submenu = document.querySelector("#menu_spacer");
         submenu.classList.toggle("show");
     }
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const menus = document.querySelectorAll('.menu');
+    const spacers = document.querySelectorAll('.spacer');
+  
+    menus.forEach((menu, index) => {
+      menu.addEventListener('click', function () {
+        spacers.forEach((spacer, i) => {
+          if (index === i) {
+            spacer.classList.toggle('show');
+          } else {
+            spacer.classList.remove('show');
+          }
+        });
+      });
+    });
+  });
+  
 
 
 function sendChat() {
@@ -28,4 +47,10 @@ function sendChat() {
             mistral_message.appendChild(document.createTextNode(data));
             chat_messages.appendChild(mistral_message);
         });
+}
+
+
+function sendReport() {
+    // 
+    // TODO afficher le contenu du rapport mistral dans le layout.html
 }

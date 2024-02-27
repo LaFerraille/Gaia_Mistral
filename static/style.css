@@ -102,6 +102,11 @@ header {
 }
 
 .spacer {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 10vw;
+  min-width: 110px;
   transition: 300ms;
 }
 

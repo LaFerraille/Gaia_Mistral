@@ -12,21 +12,24 @@
           </a>
         </li>
         <li class="menu">
-          <a href="#"><i class="fas fa-home"></i></a>
+          <a href="#profile"><i class="fas fa-home"></i></a>
         </li>
+      
+        <!-- weather -->
         <li class="menu">
-          <a href="#"><i class="fas fa-sliders-h"></i></a>
+          <a href="#weather"><i class="fas fa-cloud-sun"></i></a>
         </li>
+
+        <!-- news -->
         <li class="menu">
-          <a href="#"><i class="fas fa-cog"></i></a>
+          <a href="#news"><i class="fas fa-newspaper"></i></a>
         </li>
       </ul>
     </nav>
   </header>
   <div class="app flexed">
-    <div class="spacer">
+    <div class="spacer" id="menu_spacer">
       <ul class="submenus">
-        <li class="main"><span>Menus</span></li>
         <li class="submenu">
           <a href="#">Chat</a>
           <div id="chat">
@@ -39,8 +42,15 @@
             <button onclick="sendChat()">Send</button>
           </div>
         </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="app flexed">
+    <div class="spacer" id="profile_spacer">
+      <ul class="submenus">
         <li class="submenu">
-          <a href="#">Profile</a>
+          <a href="#profile">Profile</a>
           <div id="profile">
             <ul>
               <li>Name: {{ user_profile.name }}</li>
@@ -52,10 +62,49 @@
       </ul>
     </div>
   </div>
+
+  
+  <div class="app flexed">
+    <div class="spacer" id="news_spacer">
+      <ul class="submenus">
+        <li class="submenu">
+          <a href="#news">News</a>
+          <div id="news">
+            <ul>
+              <li>Journal du Sud-ouest</li>
+              <li>Le Monde</li>
+              <li>Le Figaro</li>
+              <li> A FINIR : API ou fausse DB en JSON !</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="app flexed">
+    <div class="spacer" id="weather_spacer">
+      <ul class="submenus">
+        <li class="submenu">
+          <a href="#weather">Weather</a>
+          <div id="weather">
+            <ul>
+              <li>Weather</li>
+              <li>Temperature</li>
+              <li>Wind</li>
+              <li> A FINIR : API ou fausse DB en JSON !</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
   <body>
     <h1>FastAPI Home</h1>
     <div id="mainContent">
       <div id="map" class="map">{{ map_html | safe }}</div>
     </div>
+  </body>
   <script src="/static/script.js"></script>
 </html>
