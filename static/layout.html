@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
+<head>
   <link rel="stylesheet" href="/static/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  </style>
+</head>
+<body>
   <header>
     <nav>
       <ul class="menus">
         <li class="main">
           <a href="#">
-            <img src="/static/mistral.png" alt="Mistral" class="mistral" />          
+            <img src="/static/mistral.png" alt="Mistral" class="mistral" />
           </a>
         </li>
         <li class="menu">
-          <a href="#profile"><i class="fas fa-home"></i></a>
+          <a href="#profile"><i class="fas fa-cloud-sun-rain"></i></a> <!-- Changed icon -->
         </li>
       
         <!-- weather -->
@@ -34,11 +39,7 @@
           <a href="#">Chat</a>
           <div id="chat">
             <ul id="chat_messages"></ul>
-            <input
-              type="text"
-              id="user_input"
-              placeholder="Posez une question au modèle Mistral AI"
-            />
+            <input type="text" id="user_input" placeholder="Posez une question au modèle Mistral AI" />
             <button onclick="sendChat()">Send</button>
           </div>
         </li>
@@ -62,49 +63,12 @@
       </ul>
     </div>
   </div>
-
-  
-  <div class="app flexed">
-    <div class="spacer" id="news_spacer">
-      <ul class="submenus">
-        <li class="submenu">
-          <a href="#news">News</a>
-          <div id="news">
-            <ul>
-              <li>Journal du Sud-ouest</li>
-              <li>Le Monde</li>
-              <li>Le Figaro</li>
-              <li> A FINIR : API ou fausse DB en JSON !</li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="app flexed">
-    <div class="spacer" id="weather_spacer">
-      <ul class="submenus">
-        <li class="submenu">
-          <a href="#weather">Weather</a>
-          <div id="weather">
-            <ul>
-              <li>Weather</li>
-              <li>Temperature</li>
-              <li>Wind</li>
-              <li> A FINIR : API ou fausse DB en JSON !</li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-
   <body>
     <h1>FastAPI Home</h1>
     <div id="mainContent">
       <div id="map" class="map">{{ map_html | safe }}</div>
     </div>
-  </body>
   <script src="/static/script.js"></script>
+  <div class="animated-background"></div> <!-- Animated background -->
+</body>
 </html>
