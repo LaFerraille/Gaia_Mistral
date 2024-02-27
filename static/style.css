@@ -1,19 +1,30 @@
 .side-menu {
-    width: 200px; /* Fixed width */
-    position: fixed;
-    top: 0;
-    overflow: auto;
-    height: 100%;
-  }
-  
-  #leftMenu {
-    left: 0;
-  }
-  
-  #rightProfile {
-    right: 0;
-  }
-  
-  .hidden {
-    display: none;
-  }
+  width: 200px;
+  /* Fixed width */
+  position: fixed;
+  top: 0;
+  overflow: auto;
+  height: 100%;
+}
+
+#leftMenu {
+  left: 0;
+}
+
+#rightProfile {
+  right: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.map {
+  /* show full screen the iframe */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}

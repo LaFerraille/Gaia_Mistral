@@ -1,20 +1,18 @@
+import json
 import os
-import sys
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
+
 import plotly.graph_objects as go
-import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, Depends, Request
+from fastapi import Depends, FastAPI, Request
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from mistralai.client import ChatMessage, MistralClient
 from pydantic import BaseModel
-import json
-from fastapi.responses import HTMLResponse, RedirectResponse, Response
-from datetime import date
-from weather import get_weather
-from fastapi.templating import Jinja2Templates
 
+from weather import get_weather
 
 # code that gives the date of today
 today = date.today()
@@ -46,8 +44,6 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # templating
 templates = Jinja2Templates(directory="static")
-
-
 
 
 def create_world_map(lat, lon):
@@ -84,8 +80,6 @@ def chat_with_mistral(user_input):
     return chat_response.choices[0].message.content
 
 
-
-
 # Profile stuff
 class UserProfile(BaseModel):
     name: str
@@ -94,13 +88,14 @@ class UserProfile(BaseModel):
     lat: float
     lon: float
 
+
 class UserLocation(BaseModel):
     city: str
+
 
 class Weather(BaseModel):
     temperature: float
     weather: str
-
 
 
 @app.post("/user_profile")
@@ -109,18 +104,19 @@ def save_user_profile(user_profile: UserProfile):
         json.dump(user_profile.dict(), f)
     return user_profile.dict()
 
+
 @app.get("/user_profile")
 def load_user_profile():
     with open('user_profile.json', 'r') as f:
         user_profile = json.load(f)
     return UserProfile(**user_profile)
 
+
 @app.put("/user_profile")
 def update_user_profile(user_profile: UserProfile):
     with open('user_profile.json', 'w') as f:
         json.dump(user_profile.dict(), f)
     return user_profile
-
 
 
 @app.get("/weather")
@@ -130,16 +126,21 @@ def load_weather():
     return Weather(**w)
 
 # Load user location
+
+
 def load_user_location():
     with open('user_location.json', 'r') as f:
         user_location = json.load(f)
     return UserLocation(**user_location)
 
 # Save weather information
+
+
 def save_weather(weather: Weather):
 
     with open('Weather.json', 'w') as f:
         json.dump(weather.dict(), f)
+
 
 @app.post("/user_location")
 async def set_user_location(user_location: UserLocation):
@@ -152,7 +153,8 @@ async def set_user_location(user_location: UserLocation):
 
 # load user profile on startup
 user_profile = load_user_profile()
-weather=load_weather()
+weather = load_weather()
+
 
 @app.get("/", response_class=HTMLResponse)
 async def enter_location():
@@ -182,32 +184,37 @@ async def enter_location():
     </script>
     """
 # Home page : using the user profile, display the weather and chat with Mistral AI
+
+
 @app.get("/home", response_class=HTMLResponse)
 async def home(
     request: Request,
     user_profile: UserProfile = Depends(load_user_profile),
     weather: Weather = Depends(load_weather),
 ):
-    
+
     with open('user_location.json', 'r') as f:
         user_location = json.load(f)
     # Get weather data for the user location
     weather_data, lat, lon = get_weather(user_location['city'], today)
     # Convert the keys to datetime objects
-    weather_times = {datetime.strptime(time, '%Y-%m-%d %H:%M:%S'): info for time, info in weather_data.items()}
+    weather_times = {datetime.strptime(
+        time, '%Y-%m-%d %H:%M:%S'): info for time, info in weather_data.items()}
     # Find the time closest to the current time
     current_time = datetime.now()
-    closest_time = min(weather_times.keys(), key=lambda time: abs(time - current_time))
+    closest_time = min(weather_times.keys(),
+                       key=lambda time: abs(time - current_time))
     # Extract weather information for the closest time
     weather_info = weather_times[closest_time]
     # Extract temperature and weather from the weather information
-    temperature = float(weather_info.split(', ')[1].split('°C')[0].split(': ')[1])
+    temperature = float(weather_info.split(
+        ', ')[1].split('°C')[0].split(': ')[1])
     weather = weather_info.split(', ')[2].split(': ')[1]
     # Create a Weather object from the weather data
     weather = Weather(temperature=temperature, weather=weather)
     temperature = weather.temperature
     weather = weather.weather
-    
+
     # create the map
     fig = create_world_map(lat, lon)
     # save the map as a file
@@ -216,65 +223,14 @@ async def home(
     # display the map
     map_html = f'<iframe src="/static/map.html" width="100%" height="100%" ></iframe>'
 
-
     return templates.TemplateResponse("layout.html", {"request": request, "user_profile": user_profile, "weather": weather, "map_html": map_html})
 
-    return f"""
-    <html>
-    <head>
-        <title>{title}</title>
-    </head>
-    <body>
 
-        <div id="leftMenu" class="side-menu">
-            <ul id="Profile">
-                <li>Name: {user_profile.name}</li>
-                <li>Age: {user_profile.age}</li>
-                <li>Location: {user_profile.location}</li>
-            </ul>
-            <button id="toggleMenu">Toggle Menu</button>
-        </div>
-        
-        <div id="rightProfile" class="side-menu">
-            <div id="menu">
-                <h1>{title}</h1>
-                <p>{description}</p>
-                <input type="text" id="user_input" placeholder="{placeholder}">
-                <button onclick="sendChat()">Send</button>
-                <ul id="chat"></ul>
-            </div>
-            <button id="toggleProfile">Toggle Profile</button>
-        </div>
-    
-        <div id="map">
-            {map_html}
-        </div>
+class ChatInput(BaseModel):
+    user_input: str
 
-        <script>
-            function sendChat() {{
-                var user_input = document.getElementById("user_input").value;
-                var chat = document.getElementById("chat");
-                var user_message = document.createElement("li");
-                user_message.appendChild(document.createTextNode(user_input));
-                chat.appendChild(user_message);
-                document.getElementById("user_input").value = "";
-                fetch('/chat', {{
-                    method: 'POST',
-                    headers: {{
-                        'Content-Type': 'application/json',
-                    }},
-                    body: JSON.stringify({{
-                        user_input: user_input
-                    }}),
-                }})
-                .then(response => response.json())
-                .then(data => {{
-                    var mistral_message = document.createElement("li");
-                    mistral_message.appendChild(document.createTextNode(data.mistral_response));
-                    chat.appendChild(mistral_message);
-                }});
-            }}
-        </script>
-    </body>
-    </html>
-    """
+
+@app.post("/chat")
+async def chat(chat_input: ChatInput):
+    print(chat_input.user_input)
+    return chat_with_mistral(chat_input.user_input)
