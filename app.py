@@ -85,6 +85,9 @@ def create_world_map(lat, lon):
     ))
 
     fig.update_layout(
+        autosize=True,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
         mapbox_style="open-street-map",
         hovermode='closest',
         mapbox=dict(
@@ -99,7 +102,6 @@ def create_world_map(lat, lon):
     )
 
     return fig
-
 
 
 
@@ -251,7 +253,7 @@ async def home(
     fig = create_world_map(lat, lon)
     # save the map as a file
     map_file = static_dir / "map.html"
-    fig.write_html(str(map_file))
+    fig.write_html(str(map_file), config={'displayModeBar': False})
     # display the map
     map_html = f'<iframe src="/static/map.html" width="100%" height="100%" ></iframe>'
 

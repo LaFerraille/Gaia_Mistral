@@ -1,37 +1,52 @@
+
 if (document.querySelector(".main")) {
-    document.querySelector(".main").onclick = function (){
+    document.querySelector(".main").onclick = function () {
         var submenu = document.querySelector("#menu_spacer");
         submenu.classList.toggle("show");
     }
 }
 
+if (document.querySelector("#profile")) {
+    document.querySelector("#profile").onclick = function () {
+        var submenu = document.querySelector("#profile_spacer");
+        submenu.classList.toggle("show");
+    }
+}
 
-document.addEventListener('DOMContentLoaded', function () {
-    const menus = document.querySelectorAll('.menu');
-    const spacers = document.querySelectorAll('.spacer');
-  
-    menus.forEach((menu, index) => {
-      menu.addEventListener('click', function () {
-        spacers.forEach((spacer, i) => {
-          if (index === i) {
-            spacer.classList.toggle('show');
-          } else {
-            spacer.classList.remove('show');
-          }
-        });
-      });
-    });
-  });
-  
+if (document.querySelector("#weather")) {
+    document.querySelector("#weather").onclick = function () {
+        var submenu = document.querySelector("#weather_spacer");
+        submenu.classList.toggle("show");
+    }
+}
+
+if (document.querySelector("#news")) {
+    document.querySelector("#news").onclick = function () {
+        var submenu = document.querySelector("#news_spacer");
+        submenu.classList.toggle("show");
+    }
+}
 
 
 function sendChat() {
     var user_input = document.getElementById("user_input").value;
     var chat_messages = document.getElementById("chat_messages");
+
     var user_message = document.createElement("li");
-    user_message.appendChild(document.createTextNode(user_input));
+    user_message.className = "chat-message"; // add a class to style the li elements
+
+    var user_image = document.createElement("img");
+    user_image.src = "static/agriculteur.png"; // replace with the actual path to the image
+    user_image.id = "user-image"; // add an id to style the image
+    user_message.appendChild(user_image);
+
+    var user_text = document.createElement("span"); // wrap the text in a span element
+    user_text.appendChild(document.createTextNode(user_input));
+    user_message.appendChild(user_text);
+
     chat_messages.appendChild(user_message);
     document.getElementById("user_input").value = "";
+
     fetch('/chat', {
         method: 'POST',
         headers: {
@@ -44,13 +59,23 @@ function sendChat() {
         .then(response => response.text())
         .then(data => {
             var mistral_message = document.createElement("li");
-            mistral_message.appendChild(document.createTextNode(data));
+            mistral_message.className = "chat-message"; // add a class to style the li elements
+
+            var mistral_image = document.createElement("img");
+            mistral_image.src = "static/mistral.png";
+            mistral_image.id = "mistral-image"; // add an id to style the image
+            mistral_message.appendChild(mistral_image);
+
+            var mistral_text = document.createElement("b"); // wrap the text in a b element
+            mistral_text.appendChild(document.createTextNode(data));
+            mistral_message.appendChild(mistral_text);
+
             chat_messages.appendChild(mistral_message);
         });
 }
-
 
 function sendReport() {
     // 
     // TODO afficher le contenu du rapport mistral dans le layout.html
 }
+
