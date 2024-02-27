@@ -324,7 +324,7 @@ async def enter_location():
         </style>
     </head>
     <body>
-        <img src="static/mistral.png" alt="Mistral Logo" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+        <img src="https://next.ink/wp-content/uploads/2024/02/announcing-mistral.png" alt="Mistral Logo" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
         <h2>Bienvenue sur votre AI-dashboard connecté</h2>
         <p>Connectez-vous et accédez à des informations personnalisées !</p>
 

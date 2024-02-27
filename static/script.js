@@ -69,7 +69,7 @@ function sendChat() {
             mistral_message.className = "chat-message"; // add a class to style the li elements
 
             var mistral_image = document.createElement("img");
-            mistral_image.src = "static/mistral.png";
+            mistral_image.src = "https://next.ink/wp-content/uploads/2024/02/announcing-mistral.png";
             mistral_image.id = "mistral-image"; // add an id to style the image
             mistral_message.appendChild(mistral_image);
 
