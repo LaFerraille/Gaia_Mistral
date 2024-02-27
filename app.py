@@ -73,15 +73,65 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 # templating
 templates = Jinja2Templates(directory="static")
 
+with open('data/departements.geojson', 'r') as f:
+        departements = json.load(f)
+    
+with open('data/regions.geojson', 'r') as f:
+    regions = json.load(f)
+
 
 def create_world_map(lat, lon):
 
-    fig = go.Figure(go.Scattermapbox(
+    fig = go.Figure()
+
+    for feature_departement in departements['features']:
+        if feature_departement['geometry']['type'] == 'Polygon':
+            coords = feature_departement['geometry']['coordinates'][0]
+            lons, lats = zip(*coords)
+            lons = list(lons)
+            lats = list(lats)
+            fig.add_trace(go.Scattermapbox(
+                mode='lines',
+                lon=lons + [lons[0]],
+                lat=lats + [lats[0]],
+                marker=go.scattermapbox.Marker(
+                    size=14
+                ),
+                text=feature_departement['properties']['nom'],
+                hoverinfo='text',
+                line=dict(
+                    color='blue',
+                    width=1
+                ),
+                showlegend=False
+            ))
+
+    for feature_region in regions['features']:
+        if feature_region['geometry']['type'] == 'Polygon':
+            coords = feature_region['geometry']['coordinates'][0]
+            lons, lats = zip(*coords)
+            lons = list(lons)
+            lats = list(lats)
+            fig.add_trace(go.Scattermapbox(
+                mode='lines',
+                lon=lons + [lons[0]],
+                lat=lats + [lats[0]],
+                hoverinfo='text',
+                line=dict(
+                    color='red',  # Set the line color to red
+                    width=1,  # Set the width of the line
+                ),
+                showlegend=False
+            ))
+
+    fig.add_trace(go.Scattermapbox(
         lat=[lat],
         lon=[lon],
         mode='markers',
-        marker=go.scattermapbox.Marker(size=14),
+        marker=go.scattermapbox.Marker(size=14, color='red'),
         text=['Location'],
+        showlegend=False,
+        hoverinfo='none'
     ))
 
     fig.update_layout(
