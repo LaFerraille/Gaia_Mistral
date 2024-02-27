@@ -1,5 +1,5 @@
 ---
-title: "GAIA Hackathon"
+title: "Dashboard Mistral - GAIA"
 emoji: "🌱"
 colorFrom: "green"
 colorTo: "blue"
@@ -13,28 +13,7 @@ hf_oauth: false
 ---
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
-# To run locally:
-uvicorn app:app --host 0.0.0.0 --port 80
-and go to http://localhost:80
-
-# TO-DO - Brainstorming
-
-**Système de carte interactive collaborative, AI-powered par Mistral**
-
-*Features:*
-- [ ] une sorte de réseau social 
-- [ ] Reporting des datas avec Mistral AI + génération d'un dashboard ad hoc
-- [ ] Profil utilisateur et centres d'intérêt pour mieux permettre au RAG de cibler ses comptes-rendus
-- [ ] newsletter journalière / hebdomadaire
-- [ ] filtrage utilisateur dans un rayon de 10, 50, 100km
-- [ ] carte interactive avec display d'API qu'on a trouvées sur internet : Par exemple (mes idées, Clément)
-  - windy pour aérologie,
-  - webcams des champs
-  - vidéos postées par des agriculteurs de ta région
-  - personnalisation du fond de carte IGN (cf. api IGN) ; geopandas pour Python je crois
-  - data.gouv.fr https://www.data.gouv.fr/fr/reuses/la-carte-interactive-des-types-delevages-et-des-regions-agricoles-en-france/
-
-# Gaia Mistral Chat Demo
+# Dashboard Mistral - GAIA
 
 ## Introduction
 
@@ -50,7 +29,7 @@ This project showcases a simple chatbot application built with Gradio and the Mi
 To run this application, you'll need:
 
 - Python 3.6 or later.
-- An API key from Mistral AI.
+- An API key from Mistral AI, Opencage and Agromonitoring.
 
 ## Setup
 
@@ -69,16 +48,49 @@ To run this application, you'll need:
   pip install -r requirements.txt
   ```
 
-3. **Set Up Your API Key**
+3. **To run locally**
 
   ```bash
-  API_KEY=your_mistral_ai_api_key_here
+  uvicorn app:app --host 0.0.0.0 --port 80
   ```
 
-## Running the Application
+You can then go to [https://localhost:80](https://localhost:80) in your browser to see the result.
 
-To launch the chatbot, run the following command in the terminal from the project's root directory:
+4. **Go to HuggingFace Space**
 
-  ```bash
-  python3 app.py
-  ```
+You can see the final public dashboard to the [Space](https://huggingface.co/spaces/Ferrxni/AgriHackteurs)
+
+
+Vous pouvez ensuite accéder à l'application en allant sur [https://localhost:80](https://localhost:80) dans votre navigateur.
+
+## Fonctionnalités
+
+### Chatbot
+
+Le chatbot utilise l'API Mistral AI pour répondre aux questions des utilisateurs sur l'agriculture.
+
+### Génération d'une newsletter Mistral
+
+L'application peut générer une newsletter Mistral contenant des informations pertinentes pour les agriculteurs.
+
+### Données météorologiques en direct
+
+L'application affiche des données météorologiques en direct pour aider les agriculteurs à planifier leurs activités.
+
+### Newsletter
+
+L'application envoie une newsletter régulière avec des informations et des conseils utiles pour les agriculteurs.
+
+### Vidéos d'autres agriculteurs
+
+L'application affiche des vidéos d'autres agriculteurs à proximité de notre emplacement, permettant aux utilisateurs de voir comment d'autres personnes gèrent leurs exploitations.
+
+## Contribution
+
+Les contributions sont les bienvenues ! Veuillez lire le fichier CONTRIBUTING.md pour plus de détails.
+
+## Licence
+
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
+
+![Arrière-plan](back.png)
