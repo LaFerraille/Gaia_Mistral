@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
+<head>
   <link rel="stylesheet" href="/static/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  </style>
+</head>
+<body>
   <header>
     <nav>
       <ul class="menus">
         <li class="main">
           <a href="#">
-            <img src="/static/mistral.png" alt="Mistral" class="mistral" />          
+            <img src="/static/mistral.png" alt="Mistral" class="mistral" />
           </a>
         </li>
         <li class="menu">
-          <a href="#"><i class="fas fa-home"></i></a>
+          <a href="#"><i class="fas fa-cloud-sun-rain"></i></a> <!-- Changed icon -->
         </li>
         <li class="menu">
           <a href="#"><i class="fas fa-sliders-h"></i></a>
@@ -31,11 +36,7 @@
           <a href="#">Chat</a>
           <div id="chat">
             <ul id="chat_messages"></ul>
-            <input
-              type="text"
-              id="user_input"
-              placeholder="Posez une question au modèle Mistral AI"
-            />
+            <input type="text" id="user_input" placeholder="Posez une question au modèle Mistral AI" />
             <button onclick="sendChat()">Send</button>
           </div>
         </li>
@@ -52,10 +53,11 @@
       </ul>
     </div>
   </div>
-  <body>
-    <h1>FastAPI Home</h1>
-    <div id="mainContent">
-      <div id="map" class="map">{{ map_html | safe }}</div>
-    </div>
+  <div id="mainContent">
+    <h1 style="text-align:center;">Welcome to Mistral AI</h1> <!-- Centered title -->
+    <div id="map" class="map">{{ map_html | safe }}</div>
+  </div>
   <script src="/static/script.js"></script>
+  <div class="animated-background"></div> <!-- Animated background -->
+</body>
 </html>
