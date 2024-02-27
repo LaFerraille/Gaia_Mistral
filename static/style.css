@@ -1,0 +1,19 @@
+.side-menu {
+    width: 200px; /* Fixed width */
+    position: fixed;
+    top: 0;
+    overflow: auto;
+    height: 100%;
+  }
+  
+  #leftMenu {
+    left: 0;
+  }
+  
+  #rightProfile {
+    right: 0;
+  }
+  
+  .hidden {
+    display: none;
+  }

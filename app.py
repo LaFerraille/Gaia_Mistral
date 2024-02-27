@@ -5,7 +5,7 @@ from pathlib import Path
 import plotly.graph_objects as go
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from fastapi.staticfiles import StaticFiles
 from mistralai.client import ChatMessage, MistralClient
 from pydantic import BaseModel
@@ -13,6 +13,8 @@ import json
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from datetime import date
 from weather import get_weather
+from fastapi.templating import Jinja2Templates
+
 
 # code that gives the date of today
 today = date.today()
@@ -42,9 +44,8 @@ static_dir.mkdir(parents=True, exist_ok=True)
 # mount FastAPI StaticFiles server
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-
-# Gradio stuff
-
+# templating
+templates = Jinja2Templates(directory="static")
 
 
 
@@ -153,16 +154,6 @@ async def set_user_location(user_location: UserLocation):
 user_profile = load_user_profile()
 weather=load_weather()
 
-### BACKEND ###
-@app.get("/meteo")
-async def read_meteo(location: str, date: str):
-    # API call to get the weather
-    pass
-
-
-
-
-
 @app.get("/", response_class=HTMLResponse)
 async def enter_location():
     return """
@@ -192,8 +183,11 @@ async def enter_location():
     """
 # Home page : using the user profile, display the weather and chat with Mistral AI
 @app.get("/home", response_class=HTMLResponse)
-async def home(user_profile: UserProfile = Depends(load_user_profile), weather: Weather = Depends(load_weather)):
-    
+async def home(
+    request: Request,
+    user_profile: UserProfile = Depends(load_user_profile),
+    weather: Weather = Depends(load_weather),
+):
     
     with open('user_location.json', 'r') as f:
         user_location = json.load(f)
@@ -220,23 +214,67 @@ async def home(user_profile: UserProfile = Depends(load_user_profile), weather: 
     map_file = static_dir / "map.html"
     fig.write_html(str(map_file))
     # display the map
-    map_html = f'<iframe src="/static/map.html" width="100%" height="500px"></iframe>'
-    
-    
+    map_html = f'<iframe src="/static/map.html" width="100%" height="100%" ></iframe>'
+
+
+    return templates.TemplateResponse("layout.html", {"request": request, "user_profile": user_profile, "weather": weather, "map_html": map_html})
+
     return f"""
-        <center>
-        <h1>Bienvenue !</h1></center>
-        <div style="display: flex;">
-            <div style="flex: 50%;">
-                <h2>Informations du jour</h2>
-                <p>temperature: {temperature}</p>
-                <p>weather: {weather}</p>
-                <h2>Map</h2>
-                {map_html}
-            </div>
-            <div style="flex: 50%;">
-                <h2>Avez-vous une question ?</h2>
-                <textarea style="width: 100%; height: 500px;"></textarea>
-            </div>
+    <html>
+    <head>
+        <title>{title}</title>
+    </head>
+    <body>
+
+        <div id="leftMenu" class="side-menu">
+            <ul id="Profile">
+                <li>Name: {user_profile.name}</li>
+                <li>Age: {user_profile.age}</li>
+                <li>Location: {user_profile.location}</li>
+            </ul>
+            <button id="toggleMenu">Toggle Menu</button>
         </div>
-        """
+        
+        <div id="rightProfile" class="side-menu">
+            <div id="menu">
+                <h1>{title}</h1>
+                <p>{description}</p>
+                <input type="text" id="user_input" placeholder="{placeholder}">
+                <button onclick="sendChat()">Send</button>
+                <ul id="chat"></ul>
+            </div>
+            <button id="toggleProfile">Toggle Profile</button>
+        </div>
+    
+        <div id="map">
+            {map_html}
+        </div>
+
+        <script>
+            function sendChat() {{
+                var user_input = document.getElementById("user_input").value;
+                var chat = document.getElementById("chat");
+                var user_message = document.createElement("li");
+                user_message.appendChild(document.createTextNode(user_input));
+                chat.appendChild(user_message);
+                document.getElementById("user_input").value = "";
+                fetch('/chat', {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        user_input: user_input
+                    }}),
+                }})
+                .then(response => response.json())
+                .then(data => {{
+                    var mistral_message = document.createElement("li");
+                    mistral_message.appendChild(document.createTextNode(data.mistral_response));
+                    chat.appendChild(mistral_message);
+                }});
+            }}
+        </script>
+    </body>
+    </html>
+    """

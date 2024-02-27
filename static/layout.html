@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastAPI Home</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="leftMenu" class="side-menu">
+        <ul id="Profile">
+            <li>Name: {{ user_profile.name }}</li>
+            <li>Age: {{ user_profile.age }}</li>
+            <li>Location: {{ user_profile.location }}</li>
+        </ul>
+        <button id="toggleMenu">Toggle Menu</button>
+    </div>
+
+    <div id="mainContent">
+        <!-- Main content here -->
+        <div id="map">
+            {{ map_html | safe }}
+        </div>
+    </div>
+
+    <div id="rightProfile" class="side-menu">
+        <!-- Profile content here -->
+        <button id="toggleProfile">Toggle Profile</button>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
