@@ -20,7 +20,7 @@ today = date.today()
 today = today.strftime("%Y-%m-%d")
 
 
-# Hugging face space secret retrieval:
+# Hugging face space secret retrieval: FIXME
 def create_env_file():
     import os
 
@@ -34,8 +34,8 @@ def create_env_file():
                 f.write(f"{secret}={secret_value}\n")
 
 
-# Hugging face space secret retrieval:
-production = True
+# Hugging face space secret retrieval: FIXME
+production = False
 if production:
     create_env_file()
 
@@ -299,7 +299,7 @@ async def enter_location():
     <head>
         <style>
             body {
-                background-image: url('static/background.png');
+                background-image: url('https://lh3.googleusercontent.com/JKE8WODi6oggtccvEyMnYswDLqSVjDv4FqIGec2qF1doGXf3HTJ5MnMHqG-thNklmxKO6aGf23XiZAFwbaSxt4sTyWc-IT-zyH6aQA=rj-w0-h1600-l80');
                 background-size: cover;
                 color: white; /* make all the text white */
                 font-size: 20px; /* increase the font size */
