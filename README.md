@@ -1,3 +1,4 @@
+![Arrière-plan](back.png)
 ---
 title: "Dashboard Mistral - GAIA"
 emoji: "🌱"
@@ -92,5 +93,3 @@ Les contributions sont les bienvenues ! Veuillez lire le fichier CONTRIBUTING.md
 ## Licence
 
 Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
-
-![Arrière-plan](back.png)
