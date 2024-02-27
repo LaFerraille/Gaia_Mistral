@@ -5,11 +5,10 @@ from pathlib import Path
 import plotly.graph_objects as go
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
 from mistralai.client import ChatMessage, MistralClient
 from pydantic import BaseModel
-from fastapi import Depends
 import json
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from datetime import date
@@ -99,8 +98,7 @@ class UserLocation(BaseModel):
 
 class Weather(BaseModel):
     temperature: float
-    humidity: float
-    pression: float
+    weather: str
 
 
 
@@ -115,11 +113,14 @@ def load_user_profile():
     with open('user_profile.json', 'r') as f:
         user_profile = json.load(f)
     return UserProfile(**user_profile)
+
 @app.put("/user_profile")
 def update_user_profile(user_profile: UserProfile):
     with open('user_profile.json', 'w') as f:
         json.dump(user_profile.dict(), f)
     return user_profile
+
+
 
 @app.get("/weather")
 def load_weather():
@@ -127,13 +128,17 @@ def load_weather():
         w = json.load(f)
     return Weather(**w)
 
+# Load user location
+def load_user_location():
+    with open('user_location.json', 'r') as f:
+        user_location = json.load(f)
+    return UserLocation(**user_location)
 
-# @app.post("/user_location")
-# async def set_user_location(user_location: UserLocation):
-#     # Save the user location as a JSON file
-#     with open('user_location.json', 'w') as f:
-#         json.dump(user_location.dict(), f)
-#     return RedirectResponse(url='/home')
+# Save weather information
+def save_weather(weather: Weather):
+
+    with open('Weather.json', 'w') as f:
+        json.dump(weather.dict(), f)
 
 @app.post("/user_location")
 async def set_user_location(user_location: UserLocation):
@@ -158,13 +163,6 @@ async def read_meteo(location: str, date: str):
 
 
 
-
-
-
-
-
-
-# On récupère les infos sur la ville. On les sauvegarde dans un fichier JSON
 @app.get("/", response_class=HTMLResponse)
 async def enter_location():
     return """
@@ -185,26 +183,37 @@ async def enter_location():
             body: JSON.stringify({city: city}),
         })
         .then(response => {
-            if (response.redirected) {
-                window.location.href = '/home';
+            if (response.ok) {
+                window.location.href = "/home";
             }
         });
     });
     </script>
     """
-
-
 # Home page : using the user profile, display the weather and chat with Mistral AI
 @app.get("/home", response_class=HTMLResponse)
-async def home(user_profile: UserProfile = Depends(load_user_profile), Weather: Weather = Depends(load_weather)):
-
-    #1st : display as background the map of the user location:
-    # get the user location
-    lat = user_profile.lat
-    lon = user_profile.lon
-    temperature = Weather.temperature
-    humidity = Weather.humidity
-    pression = Weather.pression
+async def home(user_profile: UserProfile = Depends(load_user_profile), weather: Weather = Depends(load_weather)):
+    
+    
+    with open('user_location.json', 'r') as f:
+        user_location = json.load(f)
+    # Get weather data for the user location
+    weather_data, lat, lon = get_weather(user_location['city'], today)
+    # Convert the keys to datetime objects
+    weather_times = {datetime.strptime(time, '%Y-%m-%d %H:%M:%S'): info for time, info in weather_data.items()}
+    # Find the time closest to the current time
+    current_time = datetime.now()
+    closest_time = min(weather_times.keys(), key=lambda time: abs(time - current_time))
+    # Extract weather information for the closest time
+    weather_info = weather_times[closest_time]
+    # Extract temperature and weather from the weather information
+    temperature = float(weather_info.split(', ')[1].split('°C')[0].split(': ')[1])
+    weather = weather_info.split(', ')[2].split(': ')[1]
+    # Create a Weather object from the weather data
+    weather = Weather(temperature=temperature, weather=weather)
+    temperature = weather.temperature
+    weather = weather.weather
+    
     # create the map
     fig = create_world_map(lat, lon)
     # save the map as a file
@@ -212,20 +221,18 @@ async def home(user_profile: UserProfile = Depends(load_user_profile), Weather: 
     fig.write_html(str(map_file))
     # display the map
     map_html = f'<iframe src="/static/map.html" width="100%" height="500px"></iframe>'
-
+    
     
     return f"""
         <center>
-        <h1>Bienvenu !</h1></center>
+        <h1>Bienvenue !</h1></center>
         <div style="display: flex;">
             <div style="flex: 50%;">
                 <h2>Informations du jour</h2>
                 <p>temperature: {temperature}</p>
-                <p>humidity: {humidity}</p>
-                <p>pression: {pression}</p>
+                <p>weather: {weather}</p>
                 <h2>Map</h2>
                 {map_html}
-
             </div>
             <div style="flex: 50%;">
                 <h2>Avez-vous une question ?</h2>
@@ -233,5 +240,3 @@ async def home(user_profile: UserProfile = Depends(load_user_profile), Weather: 
             </div>
         </div>
         """
-    # <h2>Gradio Dashboard</h2>
-    # {dashboard_html}

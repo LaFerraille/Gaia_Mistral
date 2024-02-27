@@ -30,7 +30,7 @@ def get_weather(city, date):
 
             if str(datew).split(' ')[0]==str(date) :
                 d[str(datew)]=f"Location : {city}, Temperature: {round(temperature-273.15,2)}°C, Weather: {weather_description}"
-        return d
+        return d, latitude, longitude
     else:
         print(f"Error: {forecast_response.status_code}")
 

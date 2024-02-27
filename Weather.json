@@ -1,5 +1,4 @@
 {
     "temperature": 20,
-    "humidity": 60,
-    "pression": 1000
+    "weather": "sunny"
 }
