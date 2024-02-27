@@ -33,6 +33,7 @@ def create_env_file():
             with open('.env', 'a') as f:
                 f.write(f"{secret}={secret_value}\n")
 
+
 # Hugging face space secret retrieval:
 production = False
 if production:
@@ -50,6 +51,38 @@ description = "Example of simple chatbot with Gradio and Mistral AI via its API"
 placeholder = "Posez moi une question sur l'agriculture"
 examples = ["Comment fait on pour produire du maïs ?",
             "Rédige moi une lettre pour faire un stage dans une exploitation agricole", "Comment reprendre une exploitation agricole ?"]
+
+
+def create_prompt_system():
+
+    prompt = "Ton rôle: Assistant agricole\n\n"
+
+    prompt += "Ton objectif: Aider les agriculteurs dans leur recherche d'information. Tu peux répondre à des questions sur l'agriculture, donner des conseils, ou aider à rédiger des documents administratifs.\n\n"
+
+    prompt += "Ton public: Agriculteurs, étudiants en agriculture, personnes en reconversion professionnelle, ou toute personne ayant des questions sur l'agriculture.\n\n"
+
+    prompt += "Ton style: Tu es professionnel, bienveillant, et tu as une connaissance approfondie de l'agriculture. Tu réponds uniquement en français et de manière semi-concise. Tu es capable de répondre à des questions techniques, mais tu sais aussi t'adapter à des personnes qui ne connaissent pas bien le domaine.\n\n"
+
+    prompt += "Tu disposes du contexte suivant pour répondre aux questions:\n\n"
+
+    # load all the json files in the root
+    for file in Path('.').glob('*.json'):
+        with open(file, 'r') as f:
+            prompt += f"Contexte: {file.stem}\n\n"
+            # convert the json to a string using the json module
+            file_content = json.load(f)
+            prompt += json.dumps(file_content, indent=4)
+            prompt += "\n\n"
+
+    prompt += "Tu es prêt à répondre aux questions ?\n\n"
+    return prompt
+
+
+def chat_with_mistral(user_input):
+    messages = [ChatMessage(role="user", content=user_input)]
+
+    chat_response = client.chat(model=model, messages=messages)
+    return chat_response.choices[0].message.content
 
 
 # create a FastAPI app
@@ -74,8 +107,8 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 templates = Jinja2Templates(directory="static")
 
 with open('data/departements.geojson', 'r') as f:
-        departements = json.load(f)
-    
+    departements = json.load(f)
+
 with open('data/regions.geojson', 'r') as f:
     regions = json.load(f)
 
@@ -183,14 +216,6 @@ def create_world_map(lat, lon, dpmts=False, rgns= False):
     return fig
 
 
-
-def chat_with_mistral(user_input):
-    messages = [ChatMessage(role="user", content=user_input)]
-
-    chat_response = client.chat(model=model, messages=messages)
-    return chat_response.choices[0].message.content
-
-
 # Profile stuff
 class UserProfile(BaseModel):
     name: str
@@ -270,13 +295,25 @@ weather = load_weather()
 @app.get("/", response_class=HTMLResponse)
 async def enter_location():
     return """
-    <h1>Welcome to Gaia Mistral Chat Demo</h1>
-    <p> Debug tool: API docs available at <a href="/docs">/docs</a></p>
-    <form id="locationForm">
-        <label for="city">Enter your city:</label><br>
-        <input type="text" id="city" name="city"><br>
-        <input type="submit" value="Submit">
-    </form>
+    <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="static/styles.css">
+        <style>
+            body {
+                background-image: url('static/background.png');
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <img src="static/mistral.png" alt="Mistral Logo" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+        <h1>Welcome to Gaia Mistral Chat Demo</h1>
+        <p> Debug tool: API docs available at <a href="/docs">/docs</a></p>
+        <form id="locationForm">
+            <label for="city">Enter your city:</label><br>
+            <input type="text" id="city" name="city"><br>
+            <input type="submit" value="Submit">
+        </form>
     <script>
     document.getElementById('locationForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -296,9 +333,9 @@ async def enter_location():
     });
     </script>
     """
+
+
 # Home page : using the user profile, display the weather and chat with Mistral AI
-
-
 @app.get("/home", response_class=HTMLResponse)
 async def home(
     request: Request,
@@ -336,7 +373,13 @@ async def home(
     # display the map
     map_html = f'<iframe src="/static/map.html" width="100%" height="100%" ></iframe>'
 
+    # initialize the chatbot with the system prompt
+    system_prompt = create_prompt_system()
+    chat_with_mistral(system_prompt)
+
+
     return templates.TemplateResponse("layout.html", {"request": request, "user_profile": user_profile, "weather": weather, "map_html": map_html})
+
 
 class ChatInput(BaseModel):
     user_input: str
@@ -346,3 +389,24 @@ class ChatInput(BaseModel):
 async def chat(chat_input: ChatInput):
     print(chat_input.user_input)
     return chat_with_mistral(chat_input.user_input)
+
+# summarize all the information from the json files
+
+
+@app.get("/report")
+async def report():
+    # load all the json files in the root
+    report = ""
+    for file in Path('.').glob('*.json'):
+        with open(file, 'r') as f:
+            report += f"Contexte: {file.stem}\n\n"
+            # convert the json to a string using the json module
+            file_content = json.load(f)
+            report += json.dumps(file_content, indent=4)
+            report += "\n\n"
+
+    report += "Synthétise les informations pour l'utilisateur : \n\n"
+    # ask mistral to summarize the report
+    chat_response = client.chat(model=model, messages=[
+                                ChatMessage(role="user", content=report)])
+    return chat_response.choices[0].message.content
