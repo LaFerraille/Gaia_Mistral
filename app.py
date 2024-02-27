@@ -35,7 +35,7 @@ def create_env_file():
 
 
 # Hugging face space secret retrieval:
-production = False
+production = True
 if production:
     create_env_file()
 
@@ -272,23 +272,54 @@ async def enter_location():
     return """
     <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="static/styles.css">
         <style>
             body {
                 background-image: url('static/background.png');
                 background-size: cover;
+                color: white; /* make all the text white */
+                font-size: 20px; /* increase the font size */
+                font-family: sans-serif; /* change the font to Arial */
+            }
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+            }
+            input[type="text"], input[type="submit"] {
+                width: 100%;
+                padding: 10px 20px;
+                margin: 10px 0;
+                box-sizing: border-box;
+                border: none;
+                border-radius: 4px;
+                background-color: #f8f8f8;
+                font-size: 16px;
             }
         </style>
     </head>
     <body>
         <img src="static/mistral.png" alt="Mistral Logo" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
-        <h1>Welcome to Gaia Mistral Chat Demo</h1>
-        <p> Debug tool: API docs available at <a href="/docs">/docs</a></p>
+        <h2>Bienvenue sur votre AI-dashboard connecté</h2>
+        <p>Connectez-vous et accédez à des informations personnalisées !</p>
+
+        <h2> Fonctionnalités</h2>
+        <ul>
+            <li> Parlez avec votre assistant Mistral</li>
+            <li> Obtenez des renseignements météo</li>
+            <li> Partagez des informations avec les agriculteurs de votre région </li>
+            <li> Générer une newsletter personnalisée grâce à Mistral</li>
+        </ul>
+        
         <form id="locationForm">
-            <label for="city">Enter your city:</label><br>
+            <label for="city">Votre ville :</label><br>
             <input type="text" id="city" name="city"><br>
             <input type="submit" value="Submit">
         </form>
+        <div>
+            <p>© 2024 AgriHackteurs</p>
+        </div>
+    </body>
     <script>
     document.getElementById('locationForm').addEventListener('submit', function(event) {
         event.preventDefault();

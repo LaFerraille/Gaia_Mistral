@@ -36,13 +36,14 @@
       <ul class="submenus">
         <li class="submenu">
           <div id="chat">
+            <p>Posez vos questions (administratives, sociales) à votre assistant Mistral !</p>
             <ul id="chat_messages"></ul>
             <input
               type="text"
               id="user_input"
-              placeholder="Posez une question au modèle Mistral AI"
+              placeholder="Discutez avec Mistral"
             />
-            <button class="button1" onclick="sendChat()">Send</button>
+            <button class="button1" onclick="sendChat()">Envoyer</button>
           </div>
         </li>
       </ul>
@@ -56,10 +57,12 @@
           <a href="#profile">Profile</a>
           <div id="profile">
             <ul>
-              <li>Name: {{ user_profile.name }}</li>
+              <li>Nom: {{ user_profile.name }}</li>
               <li>Age: {{ user_profile.age }}</li>
-              <li>Location: {{ user_profile.location }}</li>
-              <button class="button1" onclick="sendReport()">Report</button>            </ul>
+              <li>Localisation: {{ user_profile.location }}</li>
+              <button class="button1" onclick="sendReport()">Générer une newsletter Mistral</button>
+            </ul>
+            <p> Cette fonctionnalité apprend des actualités en temps réel et digère une très grande quantité d'informations sur le monde agricole. </p>
           </div>
         </li>
       </ul>
@@ -71,11 +74,17 @@
       <ul class="submenus">
         <li class="submenu">
           <div id="news">
+            <h2>Les dernières nouvelles</h2>
             <ul>
-              <li>Journal du Sud-ouest</li>
-              <li>Le Monde</li>
-              <li>Le Figaro</li>
-              <li> A FINIR : API ou fausse DB en JSON !</li>
+              <li>Paysan-breton:</li>
+              <link>
+                https://www.paysan-breton.fr/2024/02/saint-brieuc-fait-son-retour-a-la-terre/
+              </link>
+
+              <li>La France Agricole:</li>
+              <link>https://www.lafranceagricole.fr/crise-agricole/article/863578/bruno-le-maire-demande-un-effort-aux-banques-et-aux-assurances</link>
+              <li>Terre-net:</li>
+              <link>https://www.terre-net.fr/reglementation/article/863560/l-hypothese-d-un-permis-tracteur-europeen-met-le-feu-aux-poudres</link>
             </ul>
           </div>
         </li>
@@ -89,8 +98,10 @@
         <li class="submenu">
           <div id="weather">
             <ul>
-              <li>Weather</li>
-              <iframe width="650" height="450" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=default&zoom=7&overlay=wind&product=ecmwf&level=surface&lat=46.965&lon=0.813&detailLat=47.636&detailLon=0.813&detail=true&pressure=true" frameborder="0"></iframe>
+              <li>Bulletin météo</li>
+              <iframe width="300" height="450" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=default&zoom=7&overlay=wind&product=ecmwf&level=surface&lat=46.965&lon=0.813&detailLat=47.636&detailLon=0.813&detail=true&pressure=true" frameborder="0"></iframe>
+              <li>Webcams en temps réel</li>
+              <a name="windy-webcam-timelapse-player" data-id="1619075844" data-play="month" href="https://windy.com/webcams/1619075844" target="_blank">La Lande-Patry: Flers - Saint-Paul Airport</a><script async type="text/javascript" src="https://webcams.windy.com/webcams/public/embed/script/player.js"></script>
             </ul>
           </div>
         </li>
@@ -103,10 +114,9 @@
         <li class="submenu">
           <div id="videos">
             <ul>
-              <li>Video 1</li>
-              <li>Video 2</li>
-              <li>Video 3</li>
-              <li> A FINIR : API ou fausse DB en JSON !</li>
+              <li>Les vidéos du jour</li>
+              <iframe width="200" height="300" src="https://www.youtube.com/embed/yd9agyhuDp4?si=tpfszKgmmcx9zoGl&amp;controls=0&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              <iframe width="200" height="300" src="https://www.youtube.com/embed/oPcG6hpKNDc?si=-SaICP4xXHS1p_WN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </ul>
           </div>
         </li>
@@ -116,19 +126,10 @@
 
   <body>
     <div id="title">
-      <h2 class="main_title">Bienvenue sur votre dashboard !</h2>
-      <h2 class="sub_title">Accédez aux différents onglets sur votre gauche</h2>
+      <p class="sub_title">Accédez aux différents onglets sur votre gauche</p>
     </div>
     <div id="mainContent">
       <div id="map" class="map">{{ map_html | safe }}</div>
-    </div>
-    <div>
-      <h2> Fonctionnalités</h2>
-      <ul>
-        <li> Parlez avec votre assistant Mistral</li>
-        <li> Obtenez des renseignements météo</li>
-        <li> Partagez des informations avec les agriculteurs de votre région </li>
-      </ul>
     </div>
     <div id="footer">
       <p>© 2024 AgriHackteurs</p>
