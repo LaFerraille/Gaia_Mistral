@@ -3,9 +3,15 @@ import json
 import datetime
 from pprint import pprint   
 from datetime import date
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+
 def get_weather(city, date):
-    agro_api_key = "88aaa872e29fedb008a2ffd240ebdf56"
-    opencage_api_key = "bade196e8eac4d33b72dba6d9e40285a"
+    agro_api_key = os.getenv("AGRO_API_KEY")
+    opencage_api_key = os.getenv("OPENCAGE_API_KEY")
 
     # On récupère les lat et lon de la ville
     geocode_url = f"https://api.opencagedata.com/geocode/v1/json?q={city}&key={opencage_api_key}"
