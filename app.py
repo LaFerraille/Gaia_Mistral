@@ -168,6 +168,8 @@ weather = load_weather()
 @app.get("/", response_class=HTMLResponse)
 async def enter_location():
     return """
+    <h1>Welcome to Gaia Mistral Chat Demo</h1>
+    <p> Debug tool: API docs available at <a href="/docs">/docs</a></p>
     <form id="locationForm">
         <label for="city">Enter your city:</label><br>
         <input type="text" id="city" name="city"><br>
