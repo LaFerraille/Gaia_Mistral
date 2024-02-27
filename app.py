@@ -20,6 +20,25 @@ today = date.today()
 today = today.strftime("%Y-%m-%d")
 
 
+# Hugging face space secret retrieval:
+def create_env_file():
+    import os
+
+    secrets = ['API_KEY', 'AGRO_API_KEY', 'OPENCAGE_API_KEY']
+    for secret in secrets:
+        secret_value = os.environ[secret]
+        if secret_value is None:
+            print(f"Please set the environment variable {secret}")
+        else:
+            with open('.env', 'a') as f:
+                f.write(f"{secret}={secret_value}\n")
+
+# Hugging face space secret retrieval:
+production = True
+if production:
+    create_env_file()
+
+
 # Load environment variables
 load_dotenv()
 api_key = os.getenv('API_KEY')

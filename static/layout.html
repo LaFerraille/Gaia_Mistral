@@ -1,34 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>FastAPI Home</title>
-    <link rel="stylesheet" href="/static/style.css" />
-  </head>
+  <link rel="stylesheet" href="/static/style.css" />
+  <header>
+    <nav>
+      <ul class="menus">
+        <li class="main">
+          <a href="#">
+            <i class="fas fa-bars"></i>
+          </a>
+        </li>
+        <li class="menu">
+          <a href="#">
+            <i class="fas fa-home"></i>
+          </a>
+        </li>
+        <li class="menu">
+          <a href="#">
+            <i class="fas fa-sliders-h"></i>
+          </a>
+        </li>
+        <li class="menu">
+          <a href="#">
+            <i class="fas fa-cog"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="app flexed">
+    <div class="spacer">
+      <ul class="submenus">
+        <li class="main"><span>Menus</span></li>
+        <li class="submenu">
+          <a href="#">Chat</a>
+          <div id="chat">
+            <input
+              type="text"
+              id="user_input"
+              placeholder="Enter your message"
+            />
+            <button onclick="sendChat()">Send</button>
+            <ul id="chat_messages"></ul>
+          </div>
+        </li>
+        <li class="submenu">
+          <a href="#">Profile</a>
+          <ul id="Profile">
+            <li>Name: {{ user_profile.name }}</li>
+            <li>Age: {{ user_profile.age }}</li>
+            <li>Location: {{ user_profile.location }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
   <body>
     <h1>FastAPI Home</h1>
-    <div id="leftMenu" class="side-menu">
-      <ul id="Profile">
-        <li>Name: {{ user_profile.name }}</li>
-        <li>Age: {{ user_profile.age }}</li>
-        <li>Location: {{ user_profile.location }}</li>
-      </ul>
-      <button id="toggleMenu">Toggle Menu</button>
-    </div>
-
     <div id="mainContent">
       <div id="map" class="map">{{ map_html | safe }}</div>
     </div>
-
-    <div id="rightProfile" class="side-menu">
-      <button id="toggleProfile">Toggle Profile</button>
-
-      <div id="chat">
-        <input type="text" id="user_input" placeholder="Enter your message" />
-        <button onclick="sendChat()">Send</button>
-        <ul id="chat_messages"></ul>
-      </div>
-    </div>
-
-    <script src="/static/script.js"></script>
-  </body>
+  <script src="/static/script.js"></script>
 </html>

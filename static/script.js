@@ -1,12 +1,10 @@
-document.getElementById('toggleMenu').addEventListener('click', function () {
-    var menu = document.getElementById('leftMenu');
-    menu.classList.toggle('hidden');
-});
+if (document.querySelector(".main")) {
+    document.querySelector(".main").onclick = function (){
+        var submenu = document.querySelector(".spacer");
+        submenu.classList.toggle("show");
+    }
+}
 
-document.getElementById('toggleProfile').addEventListener('click', function () {
-    var profile = document.getElementById('rightProfile');
-    profile.classList.toggle('hidden');
-});
 
 function sendChat() {
     var user_input = document.getElementById("user_input").value;

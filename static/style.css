@@ -1,23 +1,178 @@
-.side-menu {
-  width: 200px;
-  /* Fixed width */
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+header,
+nav {
+  display: block;
+}
+
+a {
+  background-color: transparent;
+  color: inherit;
+  text-decoration: none;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+img {
+  border: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-padding-start: 0px;
+}
+
+header {
   position: fixed;
   top: 0;
-  overflow: auto;
-  height: 100%;
-}
-
-#leftMenu {
   left: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100%;
+  min-height: 0;
+  min-width: 100px;
+  overflow-y: auto;
+  transition: 500ms;
+  background-color: rgb(56, 82, 102);
+  border-right: 1px solid #ffffff80;
+  z-index: 10;
 }
 
-#rightProfile {
-  right: 0;
+.flexed {
+  display: flex;
 }
 
-.hidden {
+.spacer {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 10vw;
+  min-width: 110px;
+}
+
+.menus {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  min-height: 400px;
+  text-align: center;
+}
+
+.main {
+  padding: 1em 1em 0.8em;
+  border-bottom: 1px solid #FFF;
+  color: #f1f1f1;
+}
+
+.menu {
+  margin: 0.5em 0 0;
+  color: #f1f1f1;
+  transition: 0.5s;
+  font-size: 1.5rem;
+  padding: 0.5em 0;
+  border-bottom: 1px solid #ececec;
+  width: 33.333%;
+}
+
+.menu:hover {
+  color: #ececec;
+  background-color: rgba(11, 123, 132, 1);
+  border: 1px solid #FFF;
+  border-radius: 50%;
+  padding: 0.3em;
+  box-shadow: 0 0 5px 0 #000;
+}
+
+.spacer {
+  transition: 300ms;
+}
+
+.spacer.show {
+  width: auto;
+  margin-right: 1em;
+}
+
+.spacer .submenus {
   display: none;
 }
+
+.spacer.show .submenus {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 300px;
+  height: 100vh;
+  min-height: 100px;
+  margin-left: 100px;
+  padding-left: 1em;
+  text-align: left;
+  background-color: rgb(56, 82, 102);
+  animation: sulod 300ms linear;
+  -webkit-animation: sulod 300ms linear;
+}
+
+.submenu {
+  margin: 0.5em 0 0;
+  color: #FFF;
+  transition: 0.5s;
+  font-size: 90%;
+  line-height: 2.2rem;
+  padding: 0.5em 0;
+}
+
+.spacer .main {
+  border: none;
+  color: transparent;
+}
+
+@keyframes sulod {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@-moz-keyframes sulod {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes sulod {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
 
 .map {
   /* show full screen the iframe */
