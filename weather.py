@@ -12,6 +12,7 @@ load_dotenv()
 def get_weather(city, date):
     agro_api_key = os.getenv("AGRO_API_KEY")
     opencage_api_key = os.getenv("OPENCAGE_API_KEY")
+    print('==================',agro_api_key,opencage_api_key,'==================')
 
     # On récupère les lat et lon de la ville
     geocode_url = f"https://api.opencagedata.com/geocode/v1/json?q={city}&key={opencage_api_key}"
