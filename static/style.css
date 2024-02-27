@@ -4,6 +4,13 @@ html {
   -ms-text-size-adjust: 100%;
 }
 
+h1,
+h2,
+li,
+p {
+  color: white;
+}
+
 .main_title {
   color: #f1f1f1;
   text-align: center;
@@ -14,6 +21,8 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0;
+  color: #f1f1f1;
+
 }
 
 header,
@@ -194,7 +203,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;  
+  z-index: -1;
 }
 
 .mistral {
@@ -207,8 +216,58 @@ header {
   align-items: center;
 }
 
-#user-image, #mistral-image {
+.chat-input {
+  width: 100%;
+  padding: 10px 20px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border: 3px solid #555;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+}
+
+
+#user-image,
+#mistral-image {
   width: 50px;
   height: 50px;
   margin-right: 10px;
+}
+
+.submenu b {
+  font-size: 12px;
+  color: #56e943;
+  /* italic */
+  font-style: italic;
+  /* set the paragraph space  */
+  margin-bottom: 10px;
+  
+
+}
+
+.button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid #04AA6D;
+  /* Green */
+  padding: 10px 24px;
+  /* Add some padding */
+  text-align: center;
+  /* Center the text */
+  text-decoration: none;
+  /* Remove underline */
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  /* Add transition */
+  cursor: pointer;
+  /* Change cursor on hover */
+}
+
+.button1:hover {
+  background-color: #04AA6D;
+  /* Green */
+  color: white;
 }
