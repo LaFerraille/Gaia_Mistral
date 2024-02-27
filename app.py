@@ -22,7 +22,7 @@ today = today.strftime("%Y-%m-%d")
 
 # Load environment variables
 load_dotenv()
-api_key = os.getenv('MISTRAL_API_KEY')
+api_key = os.environ('MISTRAL_API_KEY')
 client = MistralClient(api_key=api_key)
 model = 'mistral-small'
 
